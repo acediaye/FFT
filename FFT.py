@@ -110,7 +110,7 @@ plt.xlabel('sec')
 plt.ylabel('amp')
 
 # IFFT with no noise
-temp = np.where(S < 100, 0, S)
+temp = np.where(S < threshold, 0, S)
 # indices2 = S > threshold
 # temp = S * indices2
 s_clean = np.fft.ifft(temp, N)
