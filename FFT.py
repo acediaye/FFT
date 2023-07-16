@@ -6,6 +6,7 @@ fs = 500
 dura = 2
 N = fs*dura
 time = np.arange(0, dura, 1/fs)
+dt = 1/fs
 
 # parameters
 a1, f1, p1 = 3, 30, 0.6
@@ -32,9 +33,11 @@ plt.ylabel('amp')
 
 # fft
 f_half = np.arange(0, int(N/2))*fs/N  # rescale
+# f_half = 1/(dt*N) * np.arange(int(N/2))
 S = np.fft.fft(s_noise, N)
 S_half = S[0:int(N/2)]
 S_mag = 2*np.abs(S_half)/N  # rescale
+# PSD = S * np.conj(S) / N  # power spectrum density
 
 # plot freq domain
 plt.subplot(2,1,2)
@@ -53,8 +56,9 @@ plt.ylabel('amp')
 
 # zeros out noise under threshold
 threshold = 0.5
-indices = S_mag > threshold  # create a mask of 0 or 1
-S_mag_clean = S_mag * indices
+# indices = S_mag > threshold  # create a mask of 0 or 1
+# S_mag_clean = S_mag * indices
+S_mag_clean = np.where(S_mag < threshold, 0, S_mag)
 
 # plot freq domain
 plt.figure(2)
@@ -106,17 +110,20 @@ plt.xlabel('sec')
 plt.ylabel('amp')
 
 # IFFT with no noise
-s_clean = np.fft.ifft(S_mag_clean, N)
+temp = np.where(S < 100, 0, S)
+# indices2 = S > threshold
+# temp = S * indices2
+s_clean = np.fft.ifft(temp, N)
 
 # plot time domain
 plt.subplot(2,1,2)
 plt.plot(time, s, label='s')
-plt.plot(time, 1000*np.real(s_clean), '-', label='ifft')
+plt.plot(time, np.real(s_clean), '-', label='ifft')
 plt.legend()
 plt.xlabel('sec')
 plt.ylabel('amp')
 
-print(s_clean[100:150])
+# print(s_clean[100:150])
 
 plt.show()
 
