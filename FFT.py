@@ -135,6 +135,6 @@ plt.figure(4)
 plt.plot(f_half, amp)
 
 
-# plt.show()
+plt.show()
 
 # https://www.youtube.com/watch?v=XEbV7WfoOSE
