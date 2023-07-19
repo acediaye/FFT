@@ -125,6 +125,16 @@ plt.ylabel('amp')
 
 # print(s_clean[100:150])
 
-plt.show()
+# DFT cos sin coefficients
+a0 = S[0]/N
+an = 2*np.real(S[1:int(N/2)+1])/N
+bn = 2*np.imag(S[1:int(N/2)+1])/N
+amp = np.sqrt(an*an + bn*bn)
+pha = np.arctan2(bn, an)
+plt.figure(4)
+plt.plot(f_half, amp)
+
+
+# plt.show()
 
 # https://www.youtube.com/watch?v=XEbV7WfoOSE
