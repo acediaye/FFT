@@ -7,9 +7,8 @@ FFT allows a signal in time domain to be mapped into frequency domain to easily 
 
 # Discrete Fourier Transform
 is defined to be
-$$
-X_k = \sum_{j=0}^{N-1} x_j * e^{-i2\pi jk/N}
-$$
+
+$$ X_k = \sum_{j=0}^{N-1} x_j * e^{-i2\pi jk/N} $$
 
 $$w_n = e^{-i2\pi/N}$$
 
@@ -39,9 +38,8 @@ $$ e^{-i2\pi (N-1)*1/N} =  w_n^{N-1}$$
 
 # Inverse Discrete Fourier Transform
 is defined to be
-$$
-x_k = \frac{1}{N} \sum_{j=0}^{N-1} X_j * e^{i2\pi jk/N}
-$$
+
+$$ x_k = \frac{1}{N} \sum_{j=0}^{N-1} X_j * e^{i2\pi jk/N} $$
 
 # Signal with Noise
 Signal 1 with amplitude 3, frequency 30 hz, and phase shift 0.6.
