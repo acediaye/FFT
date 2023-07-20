@@ -43,7 +43,7 @@ S_mag = 2*np.abs(S_half)/N  # rescale
 plt.subplot(2,1,2)
 plt.plot(f_half, S_mag, label='S noise')
 plt.legend()
-plt.xlabel('hz')
+plt.xlabel('freq')
 plt.ylabel('amp')
 
 # calculate phases
@@ -68,7 +68,7 @@ plt.plot(f_half, S_mag_clean, label='S')
 plt.plot(f_half, threshold*np.ones(len(f_half)), label='threshold')
 plt.legend()
 plt.title('Reconstruct signal')
-plt.xlabel('hz')
+plt.xlabel('freq')
 plt.ylabel('amp')
 
 # extract parameters
@@ -97,24 +97,38 @@ plt.xlabel('sec')
 plt.ylabel('amp')
 
 # IFFT with noise
-s2 = np.fft.ifft(S, N)
+# s2 = np.fft.ifft(S, N)
 
-# plot time domain
+# # plot time domain
+# plt.figure(3)
+# plt.subplot(2,1,1)
+# plt.plot(time, s_noise, label='s noise')
+# plt.plot(time, np.real(s2), '--', label='ifft')
+# plt.legend()
+# plt.title('IFFT')
+# plt.xlabel('sec')
+# plt.ylabel('amp')
+
+# PSD
+threshold2 = 100
+PSD = S*np.conj(S)/N
+PSD_clean = np.where(PSD < threshold2, 0, S)
+
+# plot freq domain
 plt.figure(3)
 plt.subplot(2,1,1)
-plt.plot(time, s_noise, label='s noise')
-plt.plot(time, np.real(s2), '--', label='ifft')
-plt.legend()
+plt.plot(f_half, np.real(PSD[0:int(N/2)]), label='PSD')
+plt.plot(f_half, np.real(PSD_clean[0:int(N/2)]), label='clean PSD')
+plt.plot(f_half, threshold2*np.ones(len(f_half)), label='threshold')
 plt.title('IFFT')
-plt.xlabel('sec')
+plt.legend()
+plt.xlabel('freq')
 plt.ylabel('amp')
 
-# IFFT with no noise
-PSD = S*np.conj(S)/N
-temp = np.where(PSD < 100, 0, S)
+# IFFT
 # indices2 = S > threshold
 # temp = S * indices2
-s_clean = np.fft.ifft(temp, N)
+s_clean = np.fft.ifft(PSD_clean, N)
 
 # plot time domain
 plt.subplot(2,1,2)
