@@ -59,7 +59,7 @@ Using a threshold of 0.5 amplitude, all signals below this are zeroed out to giv
 
 ![image](plots/IFFT.png)
 
-Using a threshold of 0.5 amplitude, can use IFFT to get the pure signal back out. (need fixing)
+Using power spectrum density (PSD) and a threshold of 100 amplitude to zero out any low powered noise, then use IFFT to get the pure signal back out.
 
 # References
 [Matlab FFT](https://www.youtube.com/watch?v=XEbV7WfoOSE)

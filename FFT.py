@@ -110,7 +110,8 @@ plt.xlabel('sec')
 plt.ylabel('amp')
 
 # IFFT with no noise
-temp = np.where(S < threshold, 0, S)
+PSD = S*np.conj(S)/N
+temp = np.where(PSD < 100, 0, S)
 # indices2 = S > threshold
 # temp = S * indices2
 s_clean = np.fft.ifft(temp, N)
@@ -118,12 +119,10 @@ s_clean = np.fft.ifft(temp, N)
 # plot time domain
 plt.subplot(2,1,2)
 plt.plot(time, s, label='s')
-plt.plot(time, np.real(s_clean), '-', label='ifft')
+plt.plot(time, np.real(s_clean), '--', label='ifft')
 plt.legend()
 plt.xlabel('sec')
 plt.ylabel('amp')
-
-# print(s_clean[100:150])
 
 # DFT cos sin coefficients
 a0 = S[0]/N
@@ -131,9 +130,8 @@ an = 2*np.real(S[1:int(N/2)+1])/N
 bn = 2*np.imag(S[1:int(N/2)+1])/N
 amp = np.sqrt(an*an + bn*bn)
 pha = np.arctan2(bn, an)
-plt.figure(4)
-plt.plot(f_half, amp)
-
+# plt.figure(4)
+# plt.plot(f_half, amp)
 
 plt.show()
 
